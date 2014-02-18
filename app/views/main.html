@@ -1,0 +1,82 @@
+<div class="container">
+    <div ng-controller="NXBoxController" class="row layout"
+         ng-if="accessToken == null">
+        <div class="jumbotron">
+            <h2>Box users? Try Nuxeo!</h2>
+
+            <p>By changing only the url of Box server to a Nuxeo server, you'll
+                be
+                able to browse your documents as usual!</p>
+        </div>
+        <div class="col-md-4" ng-click="getToken('box')">
+            <div>
+                <img src="/images/box.jpg"
+                     class="img-circle img-thumbnail">
+
+                <h2>Box Repository with Box REST API</h2>
+
+                <p>Via OAuth 2.0</p>
+                <a class="btn btn-primary btn-large">Connect</a>
+            </div>
+        </div>
+        <div class="col-md-4" ng-click="getToken('nuxeo')">
+            <div>
+                <img src="/images/nuxeo.opng.png"
+                     class="img-circle img-thumbnail">
+
+                <h2>Nuxeo Repository with Box REST API</h2>
+
+                <p>Via OAuth 2.0</p>
+                <a class="btn btn-primary btn-large">Connect</a>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-danger" ng-if="requestError!=null">HTTP
+        {{authError}}.
+        A problem occurs.
+        Don't forget to
+        disable CORS mode and refresh the page!
+        <button type="button" class="btn btn-danger"
+                ng-click="refreshPage()">Refresh
+        </button>
+    </div>
+    <div class="row layout" ng-if="accessToken!=null">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Documents</div>
+            <div class="panel-body">
+                <pre>
+                METHOD
+                GET /folders/{folder id}
+                </pre>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Created by</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="folder in boxFolder">
+                    <td>{{folder.id}}</td>
+                    <td>{{folder.name}}</td>
+                    <td>{{folder.type}}</td>
+                    <td>{{folder.size}}</td>
+                    <td>{{folder.description}}</td>
+                    <td>{{folder.item_status}}</td>
+                    <td>{{folder.created_by}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <button ng-click="clearToken()"
+                class="btn btn-danger btn-large btn-primary"
+                type="button">Disconnect
+        </button>
+    </div>
+</div>
