@@ -94,7 +94,8 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="entry in boxFolder.item_collection.entries">
-                    <td>{{entry.id}}</td>
+                    <td><a ng-click="fetchFolder(entry.id)">{{entry.id}}</a>
+                    </td>
                     <td>{{entry.name}}</td>
                     <td>{{entry.type}}</td>
                 </tr>
@@ -106,6 +107,10 @@
         <button ng-click="clearToken()"
                 class="btn btn-danger btn-large btn-primary"
                 type="button">Disconnect
+        </button>
+        <button ng-click="refreshPage()"
+                class="btn btn-default btn-large btn-primary"
+                type="button">Refresh
         </button>
     </div>
     <pre ng-if="accessToken != null && boxFolder!=null"><pre>{{boxFolder | json }}</pre></pre>
