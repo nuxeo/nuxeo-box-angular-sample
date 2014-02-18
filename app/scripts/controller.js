@@ -84,12 +84,14 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
 
 function fetchFolder(folderService, $scope, folderId) {
   $scope.requestError = null;
-  folderService.get({folderId: folderId}, function (response) {
-    $scope.boxFolder = response;
-  }, function (error) {
-    $scope.requestError = error.data;
-    if (error.status === 401) {
-      localStorage.clear();
-    }
-  });
+  if (folderService != null) {
+    folderService.get({folderId: folderId}, function (response) {
+      $scope.boxFolder = response;
+    }, function (error) {
+      $scope.requestError = error.data;
+      if (error.status === 401) {
+        localStorage.clear();
+      }
+    });
+  }
 }
