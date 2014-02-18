@@ -53,13 +53,17 @@
     </div>
     <div ng-if="accessToken!=null">
         <tabset>
-            <tab heading="Get Folder">
+            <tab heading="Get">
                 <div class="panel panel-primary">
-                    <div class="panel-heading">Documents</div>
+                    <div class="panel-heading">Box API REST</div>
                     <div class="panel-body">
                 <pre>
                 METHOD
                 GET /folders/{folder id}
+                </pre>
+                <pre>
+                METHOD
+                GET /files/{file id}
                 </pre>
                     </div>
                     <h4>Document</h4>
@@ -107,8 +111,11 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="entry in boxFolder.item_collection.entries">
-                            <td style="cursor:pointer"><a
+                            <td style="cursor:pointer" ng-if="entry.type === 'folder'"><a
                                     ng-click="fetchFolder(entry.id)">{{entry.id}}</a>
+                            </td>
+                            <td style="cursor:pointer" ng-if="entry.type === 'file'"><a
+                                    ng-click="fetchFile(entry.id)">{{entry.id}}</a>
                             </td>
                             <td>{{entry.name}}</td>
                             <td>{{entry.type}}</td>
