@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div class="alert alert-danger" ng-if="requestError!=null">HTTP
+    <div class="row layout alert alert-danger" ng-if="requestError!=null">HTTP
         {{authError}}.
         A problem occurs.
         Don't forget to
@@ -40,7 +40,7 @@
                 ng-click="refreshPage()">Refresh
         </button>
     </div>
-    <div class="row layout" ng-if="accessToken!=null">
+    <div ng-if="accessToken!=null">
         <div class="panel panel-primary">
             <div class="panel-heading">Documents</div>
             <div class="panel-body">
@@ -49,6 +49,16 @@
                 GET /folders/{folder id}
                 </pre>
             </div>
+            <div id="loadingWidget" class="row-fluid ui-corner-all"
+                 style="padding: 0 .7em; display: none;">
+                <div class="loadingContent">
+                    <p>
+                        <img alt="Loading  Content"
+                             src="/images/spinner.gif"/> Loading
+                    </p>
+                </div>
+            </div>
+            <h4>Document</h4>
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -58,25 +68,45 @@
                     <th>Size</th>
                     <th>Description</th>
                     <th>Status</th>
-                    <th>Created by</th>
+                    <th>Modified by</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="folder in boxFolder">
-                    <td>{{folder.id}}</td>
-                    <td>{{folder.name}}</td>
-                    <td>{{folder.type}}</td>
-                    <td>{{folder.size}}</td>
-                    <td>{{folder.description}}</td>
-                    <td>{{folder.item_status}}</td>
-                    <td>{{folder.created_by}}</td>
+                <tr>
+                    <td>{{boxFolder.id}}</td>
+                    <td>{{boxFolder.name}}</td>
+                    <td>{{boxFolder.type}}</td>
+                    <td>{{boxFolder.size}}</td>
+                    <td>{{boxFolder.description}}</td>
+                    <td>{{boxFolder.item_status}}</td>
+                    <td>{{boxFolder.modified_by.name}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <h4>Children</h4>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="entry in boxFolder.item_collection.entries">
+                    <td>{{entry.id}}</td>
+                    <td>{{entry.name}}</td>
+                    <td>{{entry.type}}</td>
                 </tr>
                 </tbody>
             </table>
         </div>
+    </div>
+    <div ng-if="accessToken != null" class="row layout">
         <button ng-click="clearToken()"
                 class="btn btn-danger btn-large btn-primary"
                 type="button">Disconnect
         </button>
     </div>
+    <pre ng-if="accessToken != null && boxFolder!=null"><pre>{{boxFolder | json }}</pre></pre>
 </div>
