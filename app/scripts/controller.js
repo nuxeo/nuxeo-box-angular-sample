@@ -2,51 +2,19 @@
 
 var controllerModuleApp = angular.module('boxNuxeoSampleApp.controller', ['ngResource']);
 
-controllerModuleApp.config(['$httpProvider', function ($httpProvider) {
-  var $http,
-    interceptor = ['$q', '$injector', function ($q, $injector) {
-      function success(response) {
-        // get $http via $injector because of circular dependency problem
-        $http = $http || $injector.get('$http');
-        if ($http.pendingRequests.length < 1) {
-          $('#loadingWidget').hide();
-        }
-        return response;
-      }
-
-      function error(response) {
-        // get $http via $injector because of circular dependency problem
-        $http = $http || $injector.get('$http');
-        if ($http.pendingRequests.length < 1) {
-          $('#loadingWidget').hide();
-        }
-        return $q.reject(response);
-      }
-
-      return function (promise) {
-        $('#loadingWidget').show();
-        return promise.then(success, error);
-      }
-    }];
-  $httpProvider.responseInterceptors.push(interceptor);
-}]);
-
-
 controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $http, cacheService, folderService, $route) {
 
   //Clear errors
   $scope.requestError = null;
 
-  if ($scope.boxFolder == null) {
-    fetchFolder(folderService, $scope, '0');
-  }
-
   // Authentication
   var access = cacheService.getData('access')
 
-  if (access != null) {
+  // Load folder origin if page refresh
+  if ($scope.boxFolder == null && access != null) {
     $scope.accessToken = access.access_token;
     $http.defaults.headers.common['Authorization'] = 'Bearer ' + $scope.accessToken;
+    fetchFolder(folderService, $scope, '0');
   }
 
   // Try to authenticate
@@ -84,14 +52,14 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
 
 function fetchFolder(folderService, $scope, folderId) {
   $scope.requestError = null;
-  if (folderService != null) {
-    folderService.get({folderId: folderId}, function (response) {
-      $scope.boxFolder = response;
-    }, function (error) {
-      $scope.requestError = error.data;
-      if (error.status === 401) {
-        localStorage.clear();
-      }
-    });
-  }
+  $('#loadingWidget').show();
+  folderService.get({folderId: folderId}, function (response) {
+    $scope.boxFolder = response;
+    $('#loadingWidget').hide();
+  }, function (error) {
+    $scope.requestError = error.status;
+    if (error.status === 401) {
+      localStorage.clear();
+    }
+  });
 }

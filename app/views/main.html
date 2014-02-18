@@ -32,10 +32,9 @@
         </div>
     </div>
     <div class="row layout alert alert-danger" ng-if="requestError!=null">HTTP
-        {{authError}}.
+        {{requestError}}.
         A problem occurs.
-        Don't forget to
-        disable CORS mode and refresh the page!
+        Refresh the page!
         <button type="button" class="btn btn-danger"
                 ng-click="refreshPage()">Refresh
         </button>
@@ -49,8 +48,8 @@
                 GET /folders/{folder id}
                 </pre>
             </div>
-            <div id="loadingWidget" class="row-fluid ui-corner-all"
-                 style="padding: 0 .7em; display: none;">
+            <h4>Document</h4>
+            <div id="loadingWidget" class="row layout">
                 <div class="loadingContent">
                     <p>
                         <img alt="Loading  Content"
@@ -58,7 +57,6 @@
                     </p>
                 </div>
             </div>
-            <h4>Document</h4>
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -94,7 +92,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="entry in boxFolder.item_collection.entries">
-                    <td><a ng-click="fetchFolder(entry.id)">{{entry.id}}</a>
+                    <td style="cursor:pointer"><a ng-click="fetchFolder(entry.id)">{{entry.id}}</a>
                     </td>
                     <td>{{entry.name}}</td>
                     <td>{{entry.type}}</td>
@@ -110,7 +108,7 @@
         </button>
         <button ng-click="refreshPage()"
                 class="btn btn-default btn-large btn-primary"
-                type="button">Refresh
+                type="button">Back to root folder
         </button>
     </div>
     <pre ng-if="accessToken != null && boxFolder!=null"><pre>{{boxFolder | json }}</pre></pre>
