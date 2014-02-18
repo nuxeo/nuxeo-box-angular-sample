@@ -16,3 +16,14 @@ How to play
 * Run **bower install/update**
 * Run **grunt serve**
 * If not opened automatically, open your browser @ **127.0.0.1:9000**
+
+CORS Issue
+---------------
+
+As it's not fixed yet, if you're running this app in local, please open your browser as:
+
+*open /Applications/Google\ Chrome.app --args --disable-web-security* for instance for mac/chrome environment
+
+-> to deactivate your browser security for accessing to external host servers.
+
+Once you close your browser, security will be re-enabled.
