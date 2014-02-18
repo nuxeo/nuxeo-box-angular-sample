@@ -4,38 +4,35 @@ var controllerModuleApp = angular.module('boxNuxeoSampleApp.controller', ['ngRes
 
 controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $http, cacheService, folderService, $route) {
 
-  //Clear errors
+  //Clear errors when refreshing
   $scope.requestError = null;
 
   // Authentication
-  var access = cacheService.getData('access')
+  $scope.accessToken = cacheService.getData('access');
+  $scope.authToken = cacheService.getData('auth');
 
   // Load folder origin if page refresh
-  if ($scope.boxFolder == null && access != null) {
-    $scope.accessToken = access.access_token;
+  if ($scope.boxFolder == null && $scope.accessToken != null) {
     $http.defaults.headers.common['Authorization'] = 'Bearer ' + $scope.accessToken;
     fetchFolder(folderService, $scope, '0');
   }
 
   // Try to authenticate
   $scope.getToken = function (provider) {
-    if ($scope.accessToken == null) {
-      OAuth.initialize('VPGYq7b8oYyh-YqOe_W0NjpQTBk');
-      OAuth.popup(provider, function (error, result) {
-        if (error) console.log(error);
-        if (result) {
-          cacheService.setData('access', result);
-          $route.reload();
-        }
-      });
-    } else {
-      return cacheService.getData('access').access_token;
-    }
+    OAuth.initialize($scope.authToken);//'VPGYq7b8oYyh-YqOe_W0NjpQTBk' -> vpasquier
+    cacheService.setData('auth', $scope.authToken);
+    OAuth.popup(provider, function (error, result) {
+      if (error) console.log(error);
+      if (result) {
+        cacheService.setData('access', result.access_token);
+        $route.reload();
+      }
+    });
   }
 
   // Clear the cache
   $scope.clearToken = function () {
-    cacheService.clearAll();
+    cacheService.removeData('access');
     $route.reload();
   }
 
@@ -59,7 +56,7 @@ function fetchFolder(folderService, $scope, folderId) {
   }, function (error) {
     $scope.requestError = error.status;
     if (error.status === 401) {
-      localStorage.clear();
+      $scope.clearToken();
     }
   });
 }
