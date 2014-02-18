@@ -6,7 +6,8 @@ Description
 This sample application provides 1 way to browse two repositories:
 * Nuxeo
 * Box.net
-OAuth 2.0 is used to authenticate on each repository and same Box.net REST API is used to browse them (only base url is different).
+
+OAuth 2.0 is used for authentication on each repository and same Box.net REST API is used to browse them (only base url is different).
 
 How to play
 ----------------
