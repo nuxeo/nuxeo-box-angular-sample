@@ -43,6 +43,9 @@
             </div>
         </div>
     </div>
+    <div id="wrongToken" class="row layout alert alert-warning">
+        Provide a good Auth Token.
+    </div>
     <div class="row layout alert alert-danger" ng-if="requestError!=null">HTTP
         {{requestError}}.
         A problem occurs.
@@ -111,10 +114,12 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="entry in boxFolder.item_collection.entries">
-                            <td style="cursor:pointer" ng-if="entry.type === 'folder'"><a
+                            <td style="cursor:pointer"
+                                ng-if="entry.type === 'folder'"><a
                                     ng-click="fetchFolder(entry.id)">{{entry.id}}</a>
                             </td>
-                            <td style="cursor:pointer" ng-if="entry.type === 'file'"><a
+                            <td style="cursor:pointer"
+                                ng-if="entry.type === 'file'"><a
                                     ng-click="fetchFile(entry.id)">{{entry.id}}</a>
                             </td>
                             <td>{{entry.name}}</td>

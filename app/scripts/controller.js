@@ -6,6 +6,7 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
 
   //Clear errors when refreshing
   $scope.requestError = null;
+  $('#wrongToken').hide();
 
   // Authentication
   $scope.accessToken = cacheService.getData('access');
@@ -19,15 +20,19 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
 
   // Try to authenticate
   $scope.getToken = function (provider) {
-    OAuth.initialize($scope.authToken);//'VPGYq7b8oYyh-YqOe_W0NjpQTBk' -> vpasquier
-    cacheService.setData('auth', $scope.authToken);
-    OAuth.popup(provider, function (error, result) {
-      if (error) console.log(error);
-      if (result) {
-        cacheService.setData('access', result.access_token);
-        $route.reload();
-      }
-    });
+    if ($scope.authToken) {
+      OAuth.initialize($scope.authToken);//'VPGYq7b8oYyh-YqOe_W0NjpQTBk' -> vpasquier
+      cacheService.setData('auth', $scope.authToken);
+      OAuth.popup(provider, function (error, result) {
+        if (error) $('#wrongToken').show();
+        if (result) {
+          cacheService.setData('access', result.access_token);
+          $route.reload();
+        }
+      });
+    } else {
+      $('#wrongToken').show();
+    }
   }
 
   // Clear the cache
