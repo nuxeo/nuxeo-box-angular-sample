@@ -50,6 +50,8 @@
         {{requestError}}.
         A problem occurs.
         Refresh the page!
+        Check if there is no CORS issue:
+        <pre>open /Applications/Google\ Chrome.app --args --disable-web-security</pre>
         <button type="button" class="btn btn-danger"
                 ng-click="refreshPage()">Refresh
         </button>
@@ -57,17 +59,22 @@
     <div ng-if="accessToken!=null">
         <tabset>
             <tab heading="Get">
+                        <pre>
+                            METHOD
+                            GET /folders/{folder id}
+
+                            METHOD
+                            GET /files/{file id}
+                        </pre>
                 <div class="panel panel-primary">
                     <div class="panel-heading">Box API REST</div>
                     <div class="panel-body">
-                <pre>
-                METHOD
-                GET /folders/{folder id}
-                </pre>
-                <pre>
-                METHOD
-                GET /files/{file id}
-                </pre>
+                        <div ng-if="restCalls!=null">
+                            Calls:
+                            <pre ng-repeat="restCall in restCalls">
+                                {{restCall}}
+                            </pre>
+                        </div>
                     </div>
                     <h4>Document</h4>
 

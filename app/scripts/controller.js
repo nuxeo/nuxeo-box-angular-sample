@@ -6,6 +6,7 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
 
   //Clear errors when refreshing
   $scope.requestError = null;
+  $scope.restCalls = [];
   $('#wrongToken').hide();
 
   // Authentication
@@ -43,7 +44,7 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
 
   // Reload page
   $scope.refreshPage = function () {
-    fetchFolder(folderService, $scope, '0');
+    $route.reload();
   }
 
   // Fetch folder
@@ -60,6 +61,7 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
 function fetchFolder(folderService, $scope, folderId) {
   $scope.requestError = null;
   $('#loadingWidget').show();
+  $scope.restCalls.push("https://api.box.com/2.0/folder/"+folderId);
   folderService.get({folderId: folderId}, function (response) {
     $scope.boxFolder = response;
     $('#loadingWidget').hide();
@@ -74,6 +76,7 @@ function fetchFolder(folderService, $scope, folderId) {
 function fetchFile(fileService, $scope, fileId) {
   $scope.requestError = null;
   $('#loadingWidget').show();
+  $scope.restCalls.push("https://api.box.com/2.0/files/"+fileId);
   fileService.get({fileId: fileId}, function (response) {
     $scope.boxFolder = response;
     $('#loadingWidget').hide();
