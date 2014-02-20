@@ -9,6 +9,8 @@ This sample application provides 1 way to browse two repositories:
 
 OAuth 2.0 is used for authentication on each repository and same Box.net REST API is used to browse them (only base url is different).
 
+![Box Nuxeo](https://github.com/nuxeo/nuxeo-box-angular-sample/box-nuxeo.png "Box Nuxeo")
+
 How to play
 ----------------
 
