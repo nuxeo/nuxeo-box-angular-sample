@@ -5,8 +5,10 @@
             <h2>Box users? Try Nuxeo!</h2>
 
             <p>By changing only the url of Box server to a Nuxeo server, you'll
-                be
-                able to browse your documents as usual!</p>
+                be able to browse your documents as usual!</p>
+        </div>
+        <div id="wrongToken" class="row layout alert alert-warning">
+            Provide a good Auth Token.
         </div>
         <div class="col-md-4">
             <div>
@@ -14,9 +16,9 @@
                      class="img-circle img-thumbnail">
 
                 <h2>Please provide your Box Or Nuxeo Authorization Token</h2>
-
-                Your token: <input type="text" ng-model="authToken"
-                                   name="token"/>
+                <input type="text" ng-model="authToken"
+                       name="token" tooltip="Your token" tooltip-trigger="focus"
+                       tooltip-placement="right"/>
                 <h4>{{authToken}}</h4>
             </div>
         </div>
@@ -43,9 +45,6 @@
             </div>
         </div>
     </div>
-    <div id="wrongToken" class="row layout alert alert-warning">
-        Provide a good Auth Token.
-    </div>
     <div class="row layout alert alert-danger" ng-if="requestError!=null">HTTP
         {{requestError}}.
         A problem occurs.
@@ -56,24 +55,45 @@
                 ng-click="refreshPage()">Refresh
         </button>
     </div>
-    <div ng-if="accessToken!=null">
+    <div ng-if="accessToken!=null" class="grid">
         <tabset>
             <tab heading="Get">
-                        <pre>
-                            METHOD
-                            GET /folders/{folder id}
+                <code>
+                    <p>GET METHODS:</p>
 
-                            METHOD
-                            GET /files/{file id}
-                        </pre>
+                    <p>/folders/{folder id}
+                        -
+                        /files/{file id}</p>
+                </code>
+
                 <div class="panel panel-primary">
                     <div class="panel-heading">Box API REST</div>
                     <div class="panel-body">
                         <div ng-if="restCalls!=null">
-                            Calls:
-                            <pre ng-repeat="restCall in restCalls">
-                                {{restCall}}
-                            </pre>
+                            <p>Calls:</p>
+
+                            <p ng-repeat="restCall in restCalls track by $index">
+                                <code>{{restCall}}</code>
+                            </p>
+
+                            <div>
+                                <button class="btn-xs btn-primary"
+                                        ng-click="refreshPage()">
+                                    Reset
+                                </button>
+                                <button class="btn-xs btn-primary"
+                                        ng-click="isCollapsed = !isCollapsed">
+                                    JSON Payload
+                                </button>
+                                <hr>
+                                <div collapse="isCollapsed">
+                                    <pre ng-if="accessToken != null && boxFolder!=null"><pre>{{boxFolder | json }}</pre></pre>
+                                    <button class="btn-xs btn-primary"
+                                            ng-click="isCollapsed = !isCollapsed">
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <h4>Document</h4>
@@ -143,10 +163,9 @@
                 class="btn btn-danger btn-large btn-primary"
                 type="button">Disconnect
         </button>
-        <button ng-click="refreshPage()"
+        <button ng-click="fetchRoot()"
                 class="btn btn-default btn-large btn-primary"
                 type="button">Back to root folder
         </button>
     </div>
-    <pre ng-if="accessToken != null && boxFolder!=null"><pre>{{boxFolder | json }}</pre></pre>
 </div>

@@ -17,3 +17,19 @@
     background: rgba(200, 200, 200, 0.1);
     transition: 0.5s;
 }
+
+.grid {
+    padding: 20px 0;
+}
+
+.grid > div > div {
+    margin-top: -10px;
+    border: 1px solid rgb(200, 200, 200);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 2px;
+    background: rgba(200, 200, 200, 0.1);
+}
+
+pre {
+    text-align: start;
+    height:100%;
+}
