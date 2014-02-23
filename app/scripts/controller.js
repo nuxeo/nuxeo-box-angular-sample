@@ -2,6 +2,9 @@
 
 var controllerModuleApp = angular.module('boxNuxeoSampleApp.controller', ['ngResource']);
 
+var BASE_URL_NUXEO = "https://demo.nuxeo.com/nuxeo/site/box/2.0";
+var BASE_URL_BOX = "https://api.box.com/2.0";
+
 controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $http, cacheService, folderService, $route, fileService) {
 
   //Clear errors when refreshing
@@ -15,6 +18,7 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
   // Authentication
   $scope.accessToken = cacheService.getData('access');
   $scope.authToken = cacheService.getData('auth');
+  $scope.baseURL = cacheService.getData('baseURL');
 
   // Load folder origin if page refresh
   if ($scope.boxFolder == null && $scope.accessToken != null) {
@@ -31,6 +35,7 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
         if (error) $('#wrongToken').show();
         if (result) {
           cacheService.setData('access', result.access_token);
+          cacheService.setData('baseURL', provider != 'nuxeo' ? BASE_URL_BOX : BASE_URL_NUXEO);
           $route.reload();
         }
       });
@@ -69,7 +74,7 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
 function fetchFolder(folderService, $scope, folderId) {
   $scope.requestError = null;
   $('#loadingWidget').show();
-  $scope.restCalls.push("https://api.box.com/2.0/folder/" + folderId);
+  $scope.restCalls.push($scope.baseURL + "/folder/" + folderId);
   folderService.get({folderId: folderId}, function (response) {
     $scope.boxFolder = response;
     $('#loadingWidget').hide();
@@ -84,7 +89,7 @@ function fetchFolder(folderService, $scope, folderId) {
 function fetchFile(fileService, $scope, fileId) {
   $scope.requestError = null;
   $('#loadingWidget').show();
-  $scope.restCalls.push("https://api.box.com/2.0/files/" + fileId);
+  $scope.restCalls.push($scope.baseURL + "/files/" + fileId);
   fileService.get({fileId: fileId}, function (response) {
     $scope.boxFolder = response;
     $('#loadingWidget').hide();
