@@ -2,7 +2,7 @@
 
 var controllerModuleApp = angular.module('boxNuxeoSampleApp.controller', ['ngResource']);
 
-var BASE_URL_NUXEO = 'https://demo.nuxeo.com/nuxeo/site/box/2.0';
+var BASE_URL_NUXEO = 'https://demo.nuxeo.com/nuxeo/box/2.0';
 var BASE_URL_BOX = 'https://api.box.com/2.0';
 
 controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $http, cacheService, folderService, $route, fileService) {
