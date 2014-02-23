@@ -4,10 +4,10 @@ var restServiceModuleApp = angular.module('boxNuxeoSampleApp.rest_service', ['ng
 var baseURL;
 restServiceModuleApp.factory('folderService', function ($resource, cacheService) {
   baseURL = cacheService.getData('baseURL');
-  return $resource(baseURL + "/folders/:folderId", {});
+  return $resource(baseURL + '/folders/:folderId', {});
 });
 
 restServiceModuleApp.factory('fileService', function ($resource, cacheService) {
   baseURL = cacheService.getData('baseURL');
-  return $resource(baseURL + "/files/:fileId", {});
+  return $resource(baseURL + '/files/:fileId', {});
 });
