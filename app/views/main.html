@@ -7,22 +7,7 @@
             <p>By changing only the url of Box server to a Nuxeo server, you'll
                 be able to browse your documents as usual!</p>
         </div>
-        <div id="wrongToken" class="row layout alert alert-warning">
-            Provide a good Auth Token.
-        </div>
-        <div class="col-md-4">
-            <div>
-                <img src="/images/logo.png"
-                     class="img-circle img-thumbnail">
-
-                <h2>Please provide your Box Or Nuxeo Authorization Token</h2>
-                <input type="text" ng-model="authToken"
-                       name="token" tooltip="Your token" tooltip-trigger="focus"
-                       tooltip-placement="right"/>
-                <h4>{{authToken}}</h4>
-            </div>
-        </div>
-        <div class="col-md-4" ng-click="getToken('box')">
+        <div class="col-xs-6" ng-click="getToken('box')">
             <div>
                 <img src="/images/box.jpg"
                      class="img-circle img-thumbnail">
@@ -33,7 +18,7 @@
                 <a class="btn btn-primary btn-large">Connect</a>
             </div>
         </div>
-        <div class="col-md-4" ng-click="getToken('nuxeo')">
+        <div class="col-xs-6" ng-click="getToken('nuxeo')">
             <div>
                 <img src="/images/nuxeo.opng.png"
                      class="img-circle img-thumbnail">
@@ -58,14 +43,6 @@
     <div ng-if="accessToken!=null" class="grid">
         <tabset>
             <tab heading="Get">
-                <code>
-                    <p>GET METHODS:</p>
-
-                    <p>/folders/{folder id}
-                        -
-                        /files/{file id}</p>
-                </code>
-
                 <div class="panel panel-primary">
                     <div class="panel-heading">Box API REST</div>
                     <div class="panel-body">
@@ -73,7 +50,7 @@
                             <p>Calls:</p>
 
                             <p ng-repeat="restCall in restCalls track by $index">
-                                <code>{{restCall}}</code>
+                                <code>GET {{restCall}}</code>
                             </p>
 
                             <div>

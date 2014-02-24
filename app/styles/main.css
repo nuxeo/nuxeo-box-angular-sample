@@ -33,3 +33,8 @@ pre {
     text-align: start;
     height:100%;
 }
+
+.jumbotron {
+ padding: 20px;
+ margin-bottom: 0px;
+}
