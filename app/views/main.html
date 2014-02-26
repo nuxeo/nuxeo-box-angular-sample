@@ -30,110 +30,109 @@
             </div>
         </div>
     </div>
-    <div class="row layout alert alert-danger" ng-if="requestError!=null">HTTP
-        {{requestError}}.
-        A problem occurs.
-        Refresh the page!
-        Check if there is no CORS issue:
-        <code>open /Applications/Google\ Chrome.app --args --disable-web-security</code>
-        <button type="button" class="btn btn-danger"
-                ng-click="refreshPage()">Refresh
-        </button>
+    <div class="row layout alert alert-danger" ng-if="requestError!=null">
+        <p>HTTP {{requestError}}</p>
+
+        <p>If there is CORS issue, you can open Chrome for instance as:
+        </p>
+
+        <p>
+            <code>open /Applications/Google\ Chrome.app --args
+                --disable-web-security</code>
+        </p>
+
+        <p>
+            <button type="button" class="btn btn-danger"
+                    ng-click="refreshPage()">Refresh
+            </button>
+        </p>
+
     </div>
     <div ng-if="accessToken!=null" class="grid">
-        <tabset>
-            <tab heading="Get">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Box API REST</div>
-                    <div class="panel-body">
-                        <div ng-if="restCalls!=null">
-                            <p>Calls:</p>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Box API REST on <a href="{{siteURL}}"
+                                                          target="_blank">{{siteURL}}</a>
+            </div>
+            <div class="panel-body">
+                <p>Calls:</p>
 
-                            <p ng-repeat="restCall in restCalls track by $index">
-                                <code>GET {{restCall}}</code>
-                            </p>
+                <p ng-repeat="restCall in restCalls track by $index">
+                    <code>{{restCall}}</code>
+                </p>
 
-                            <div>
-                                <button class="btn-xs btn-primary"
-                                        ng-click="refreshPage()">
-                                    Reset
-                                </button>
-                                <button class="btn-xs btn-primary"
-                                        ng-click="isCollapsed = !isCollapsed">
-                                    JSON Payload
-                                </button>
-                                <hr>
-                                <div collapse="isCollapsed">
-                                    <pre ng-if="accessToken != null && boxFolder!=null"><pre>{{boxFolder | json }}</pre></pre>
-                                    <button class="btn-xs btn-primary"
-                                            ng-click="isCollapsed = !isCollapsed">
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h4>Document</h4>
-
-                    <div id="loadingWidget" class="row layout">
-                        <div class="loadingContent">
-                            <p>
-                                <img alt="Loading  Content"
-                                     src="/images/spinner.gif"/> Loading
-                            </p>
-                        </div>
-                    </div>
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Size</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Modified by</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>{{boxFolder.id}}</td>
-                            <td>{{boxFolder.name}}</td>
-                            <td>{{boxFolder.type}}</td>
-                            <td>{{boxFolder.size}}</td>
-                            <td>{{boxFolder.description}}</td>
-                            <td>{{boxFolder.item_status}}</td>
-                            <td>{{boxFolder.modified_by.name}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <h4>Children</h4>
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="entry in boxFolder.item_collection.entries">
-                            <td style="cursor:pointer"
-                                ng-if="entry.type === 'folder'"><a
-                                    ng-click="fetchFolder(entry.id)">{{entry.id}}</a>
-                            </td>
-                            <td style="cursor:pointer"
-                                ng-if="entry.type === 'file'"><a
-                                    ng-click="fetchFile(entry.id)">{{entry.id}}</a>
-                            </td>
-                            <td>{{entry.name}}</td>
-                            <td>{{entry.type}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div id="loadingWidget">
+                    <p>
+                        <img alt="Loading  Content"
+                             src="/images/spinner.gif"/>
+                    </p>
                 </div>
-            </tab>
-        </tabset>
+
+                <button class="btn-xs btn-primary"
+                        ng-click="refreshPage()">
+                    Reset
+                </button>
+                <button class="btn-xs btn-primary"
+                        ng-click="isCollapsed = !isCollapsed">
+                    JSON Payload
+                </button>
+                <div collapse="isCollapsed">
+                    <pre ng-if="accessToken != null && boxFolder!=null"><pre>{{boxFolder | json }}</pre></pre>
+                    <button class="btn-xs btn-primary"
+                            ng-click="isCollapsed = !isCollapsed">
+                        Close
+                    </button>
+                </div>
+            </div>
+            <ul class="breadcrumb" ng-if="breadcrumb.length>1">
+                <li ng-repeat="crumb in breadcrumb"><a
+                        ng-click="fetchFolder(crumb.id)" class="breadcrumblink">{{crumb.name}}</a>
+                </li>
+            </ul>
+            <h4>Current document</h4>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Size</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Modified by</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{boxFolder.id}}</td>
+                    <td>{{boxFolder.name}}</td>
+                    <td>{{boxFolder.type}}</td>
+                    <td>{{boxFolder.size}}</td>
+                    <td>{{boxFolder.description}}</td>
+                    <td>{{boxFolder.item_status}}</td>
+                    <td>{{boxFolder.modified_by.name}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <h4>Children</h4>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Name</th>
+                    <th>ID</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="entry in boxFolder.item_collection.entries"
+                    style="cursor:pointer"
+                    ng-click="entry.type === 'folder'?fetchFolder(entry.id):fetchFile(entry.id)">
+                    <td>{{entry.type}}</td>
+                    <td>{{entry.name}}</td>
+                    <td>{{entry.id}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div ng-if="accessToken != null" class="row layout">
         <button ng-click="clearToken()"
