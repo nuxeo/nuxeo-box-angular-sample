@@ -12,7 +12,6 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
   //Clear errors when refreshing
   $scope.requestError = null;
   $scope.restCalls = [];
-  $scope.breadcrumb = [];
 
   // UI init
   $scope.isCollapsed = true;
@@ -54,7 +53,6 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
     // Reload page
     $scope.fetchRoot = function () {
       fetchFolder(documentService, $scope, '0');
-      $scope.breadcrumb = [];
     },
 
     $scope.refreshPage = function () {
@@ -75,16 +73,22 @@ controllerModuleApp.controller('NXBoxController', function ($scope, $resource, $
 function fetchFolder(documentService, $scope, folderId) {
   $scope.requestError = null;
   $('#loadingWidget').show();
-  $scope.restCalls.push("GET " + $scope.baseURL + '/folder/' + folderId);
+  $scope.restCalls.push("GET " + $scope.baseURL + '/folders/' + folderId);
   documentService.getFolder($scope.baseURL).get({folderId: folderId}, function (response) {
     $scope.boxFolder = response;
-    $scope.breadcrumb.push(response);
+    $scope.breadcrumb = [];
+    for (var i = response.path_collection.entries.length - 1; i > -1; i--) {
+      $scope.breadcrumb.push(response.path_collection.entries[i]);
+    }
     $('#loadingWidget').hide();
   }, function (error) {
     $scope.requestError = error.status;
     if (error.status === 401) {
       $scope.clearToken();
     }
+  });
+  documentService.getCollaboration($scope.baseURL).get({folderId: folderId}, function (response) {
+    $scope.boxCollab = response;
   });
 }
 

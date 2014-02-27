@@ -1,5 +1,5 @@
 <div class="container">
-    <div ng-controller="NXBoxController" class="row layout"
+    <div class="row layout"
          ng-if="accessToken == null">
         <div class="jumbotron">
             <h2>Box users? Try Nuxeo!</h2>
@@ -83,7 +83,7 @@
                     </button>
                 </div>
             </div>
-            <ul class="breadcrumb" ng-if="breadcrumb.length>1">
+            <ul class="breadcrumb" ng-if="breadcrumb.length>0">
                 <li ng-repeat="crumb in breadcrumb"><a
                         ng-click="fetchFolder(crumb.id)" class="breadcrumblink">{{crumb.name}}</a>
                 </li>
@@ -144,4 +144,6 @@
                 type="button">Back to root folder
         </button>
     </div>
+    <p>Collaborations definition:</p>
+    <pre ng-if="accessToken != null && boxFolder!=null"><pre>{{boxCollab | json }}</pre></pre>
 </div>
