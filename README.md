@@ -1,30 +1,35 @@
-Nuxeo and Box repository browser with unique REST API
+Nuxeo and Box repositories browser via Box REST API
 ================
 Description
 ----------------
 
-This sample application provides 1 way to browse two repositories:
-* Nuxeo
-* Box.net
+This sample application provides homogeneous rest api to browse two repositories:
+* [Nuxeo](http://www.nuxeo.com)
+* [Box](http://www.box.com)
 
-OAuth 2.0 is used for authentication on each repository and same Box.net REST API is used to browse them (only base url is different).
+OAuth 2.0 is used for authentication on each repository and same Box REST API is used to browse them (only base url is different).
 
 How to play
 ----------------
 
 * Checkout this repository
-* Go to *nuxeo-box-angular-sample* folder and run **npm install/update**
-* Run **bower install/update**
-* Run **grunt serve**
+* Make sure to have `npm` installed
+* Go to `nuxeo-box-angular-sample` folder and execute `npm install` and `npm update`
+* Execute `bower install` and `bower update`
+* Run `grunt serve`
 * If not opened automatically, open your browser @ **127.0.0.1:9000**
+* On Box side, use your personal credentials
+* On Nuxeo side, use following credentials:
+    * Username: Administrator
+    * Password: nx6team
 
 CORS Issue
 ---------------
 
-As it's not fixed yet, if you're running this app in local, please open your browser as:
+If you're running this app in local trying to access Box api, please open your browser as:
 
 *open /Applications/Google\ Chrome.app --args --disable-web-security* for instance for mac/chrome environment
 
--> to deactivate your browser security for accessing to external host servers.
+-> to deactivate your browser security to access to external host servers.
 
 Once you close your browser, security will be re-enabled.
