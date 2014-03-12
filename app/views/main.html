@@ -144,6 +144,5 @@
                 type="button">Back to root folder
         </button>
     </div>
-    <p>Collaborations definition:</p>
-    <pre ng-if="accessToken != null && boxFolder!=null"><pre>{{boxCollab | json }}</pre></pre>
+    <div ng-if="boxCollab!=null"><p>Collaborations definition</p><pre>{{boxCollab | json }}</pre></div>
 </div>
