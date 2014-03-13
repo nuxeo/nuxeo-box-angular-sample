@@ -12,16 +12,22 @@ OAuth 2.0 is used for authentication on each repository and same Box REST API is
 How to play
 ----------------
 
-* Checkout this repository
-* Make sure to have `npm` installed
-* Go to `nuxeo-box-angular-sample` folder and execute `npm install` and `npm update`
-* Execute `bower install` and `bower update`
+- Checkout this repository
+- Make sure to have `npm` installed
+   - For Linux/Mac you can run [this script](https://gist.github.com/isaacs/579814#file-node-and-npm-in-30-seconds-sh) to install nodejs and npm
+   - For windows, please see [this documentation](https://github.com/npm/npm#fancy-windows-install)
+- Go to `nuxeo-box-angular-sample` folder and execute:
+   - `npm install update`
+- Make sure to have `bower` and `grunt` installed
+   - `npm install -g yo`
+   - `bower install update`
 * Run `grunt serve`
 * If not opened automatically, open your browser @ **127.0.0.1:9000**
 * On Box side, use your personal credentials
 * On Nuxeo side, use following credentials:
     * Username: Administrator
     * Password: nx6team
+    * You can access to this [Nuxeo demo instance](http://starship.nuxeo.com) through your navigator
 
 CORS Issue
 ---------------
