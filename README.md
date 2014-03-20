@@ -18,7 +18,6 @@ How to play
    - For windows, please see [this documentation](https://github.com/npm/npm#fancy-windows-install)
 - Go to `nuxeo-box-angular-sample` folder and execute:
    - `npm install`
-- Make sure to have `bower` installed
    - `npm install -g yo`
    - `bower install update`
 * Run `grunt serve`
