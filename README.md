@@ -17,8 +17,8 @@ How to play
    - For Linux/Mac you can run [this script](https://gist.github.com/isaacs/579814#file-node-and-npm-in-30-seconds-sh) to install nodejs and npm
    - For windows, please see [this documentation](https://github.com/npm/npm#fancy-windows-install)
 - Go to `nuxeo-box-angular-sample` folder and execute:
-   - `npm install update`
-- Make sure to have `bower` and `grunt` installed
+   - `npm install`
+- Make sure to have `bower` installed
    - `npm install -g yo`
    - `bower install update`
 * Run `grunt serve`
